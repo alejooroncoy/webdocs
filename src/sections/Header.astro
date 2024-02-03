@@ -1,0 +1,184 @@
+---
+import Logo from "../components/shared/Logo.astro";
+---
+
+<header class="header">
+  <nav class="nav">
+    <Logo width={100} />
+    <button id="menuIcon" class="menu__icon">
+      <div class="menu__bar"></div>
+      <div class="menu__bar"></div>
+      <div class="menu__bar"></div>
+    </button>
+    <ul class="menu" id="menuHeader">
+      <li class="menu__item">
+        <a class="menu__item__link" href="/docs">Lenguajes</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__item__link" href="/about">Sobre nosotros</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .header {
+    width: 100%;
+    box-shadow: 0 0.0625rem 0.2rem 0 #ebebeb26;
+    z-index: 3;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+    backdrop-filter: saturate(180%) blur(5px);
+    transition: background-color 0.25s ease;
+    &:has(.menu--open) {
+      background-color: #121212;
+      @media (width >= 768px) {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    width: min(100%, 768px);
+    margin: auto;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+
+    @media (width >= 768px) {
+      line-height: 2rem;
+    }
+  }
+  .menu {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: fixed;
+    inset: 3.2rem 0 0 0;
+    gap: 1rem;
+    justify-content: center;
+    min-height: calc(100dvh - 3.2rem);
+    align-items: center;
+    flex-direction: column;
+    background-color: #121212;
+    clip-path: circle(0% at 0 0);
+
+    transition: clip-path 0.25s ease;
+
+    &__checkbox {
+      display: none;
+    }
+
+    &__icon {
+      width: 1.5rem;
+      height: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: calc(0.0625rem * 5);
+      transition: padding-left 0.25s ease;
+
+      &--open {
+        padding-left: 0.15rem;
+        & .menu__bar {
+          &:nth-child(2) {
+            transform: translateX(-85%);
+            opacity: 0;
+          }
+
+          &:nth-child(1) {
+            transform: rotate(45deg);
+            transform-origin: left top;
+          }
+
+          &:nth-child(3) {
+            transform: rotate(-45deg);
+            transform-origin: left bottom;
+          }
+        }
+      }
+
+      @media (width >= 728px) {
+        display: none;
+      }
+    }
+
+    &__bar {
+      width: 1.5rem;
+      height: calc(0.0625rem * 3);
+      border-radius: 0.25rem;
+      background-color: #ebebeb;
+      transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    &__item {
+      &:nth-child(2) &__link {
+        transition-delay: 0.4s;
+      }
+
+      &__link {
+        text-decoration: none;
+        color: #ebebeb;
+        opacity: 0;
+        display: block;
+        transform: translateY(1rem);
+        font-size: 1.25rem;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+        transition-delay: 0.25s;
+
+        @media (width >= 768px) {
+          font-size: 0.95rem;
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+
+    &--open {
+      clip-path: circle(150% at 0 0);
+      & .menu__item__link {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (width >= 768px) {
+      clip-path: none;
+      position: static;
+      flex-direction: row;
+      min-height: auto;
+      background-color: transparent;
+    }
+  }
+</style>
+
+<script>
+  const $menuIcon = document.querySelector("#menuIcon");
+  const $menuHeader = document.querySelector("#menuHeader");
+
+  $menuIcon.addEventListener("click", () => {
+    $menuIcon.classList.toggle("menu__icon--open");
+    $menuHeader.classList.toggle("menu--open");
+  });
+
+  $menuHeader.addEventListener("click", (e) => {
+    const { target } = e;
+
+    if (target instanceof HTMLElement && target.nodeName === "A") {
+      $menuIcon.classList.remove("menu__icon--open");
+      $menuHeader.classList.remove("menu--open");
+    }
+  });
+</script>

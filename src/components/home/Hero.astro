@@ -1,0 +1,91 @@
+<section class="hero">
+  <div class="hero-container">
+    <h1 class="hero__title"><span class="hero__title hero__title--web">Web</span> docs</h1>
+    <h2 class="hero__subtitle">Aprende las tecnologías web de manera interactiva</h2>
+		<button class="hero__btn">¡A aprender!</button>
+  </div>
+</section>
+
+<style>
+	.hero {
+		padding: 8rem 0;
+		position: relative;
+		&::before{
+      content: "";
+      inset: 0;
+      position: absolute;
+			background-image: radial-gradient(ellipse 45% 45% at 50% 45%,#7877c64d,rgba(255,255,255,0));
+      z-index: -1;
+    }
+		&-container {
+			height: 100%;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			justify-content: center;
+			padding: 2rem 1.5rem;
+			box-sizing: border-box;
+			gap: 0.1rem;
+		}
+		&__title {
+			margin: 0;
+			font-size:clamp(3.5rem,10vw,7rem);
+			text-align: center;
+			color: #ebebeb;
+			&--web {
+				color: #D5B263;
+				position: relative;
+				&:before {
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom: 0.4rem;
+					height: 0.48rem;
+					width: 0;
+					background-color: #D5B263;
+					will-change: width;
+					animation: appearWeb 1 forwards 0.25s ease;
+          @media (width >= 768px) {
+            bottom: 0.65rem;
+            height: 0.685rem;
+          }
+				}
+			}
+		}
+		&__subtitle {
+			color: #ebebeb;
+			font-size: clamp(1rem,1.5vw,1.5rem);
+			text-align: center;
+			margin: 0;
+			&--number {
+				font-size: clamp(1.25rem,1.5vw,2rem);
+			}
+		}
+		&__btn {
+			font-weight: 600;
+			text-decoration: none;
+			background-color: #ebebeb;
+			color: #121212;
+			padding: 0.5rem 1rem;	
+			border-radius: 0.25rem;
+			font-size: 1rem;
+			margin-top: 1.05rem;
+			font-family: var(--font-family);
+			border: none;
+			cursor: pointer;
+			transition: transform 0.25s ease;
+			&:active {
+				transform: scale(0.95);
+			}
+		}
+	}
+
+	@keyframes appearWeb {
+		from {
+			width: 0;
+		}
+		to {
+			width: 100%;
+		}
+	}
+</style>
